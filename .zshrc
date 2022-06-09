@@ -110,3 +110,11 @@ prompt_context () {
     fi
 }
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Open VS Code from Terminal
+code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
+
+# Appium config for emulator
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8.0)
+export ANDROID_HOME=${HOME}/Library/Android/sdk                                                                                                             
+export PATH="/Users/gautham/Downloads/allure-2.17.3/bin:$PATH"
