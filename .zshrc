@@ -2,13 +2,13 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/gautham/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -70,7 +70,11 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    git
+    zsh-syntax-highlighting
+    zsh-autosuggestions
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -100,21 +104,53 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-DEFAULT_USER="gautham"
-
-prompt_context () {
-    if [[ "$USER" == "$DEFAULT_USER" ]]; then
-     prompt_segment black default "%(!.%{%F{yellow}%}.) $USER "
-    else
-     prompt_segment black default "%(!.%{%F{yellow}%}.)$USER "
-    fi
-}
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Custom config used for theme 'agnoster'
+# DEFAULT_USER="gautham"
+# prompt_context () {
+#     if [[ "$USER" == "$DEFAULT_USER" ]]; then
+#      prompt_segment black default "%(!.%{%F{yellow}%}.) $USER "
+#     else
+#      prompt_segment black default "%(!.%{%F{yellow}%}.)$USER "
+#     fi
+# }
 
 # Open VS Code from Terminal
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
+# Set java home by running command using aliases
+# javahome() {
+#     unset JAVA_HOME
+#     export JAVA_HOME=$(/usr/libexec/java_home -v "$1");
+# }
+# alias j1.8='javahome 1.8'
+# alias j17='javahome 17'
+
 # Appium config for emulator
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.8.0)
 export ANDROID_HOME=${HOME}/Library/Android/sdk                                                                                                             
-export PATH="/Users/gautham/Downloads/allure-2.17.3/bin:$PATH"
+# export PATH="/Users/gautham/Downloads/allure-2.17.3/bin:$PATH"
+
+# Terminal custom config
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=’red’
+
+# Add a space in the first prompt
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%f"
+
+# Visual customisation of the second prompt line
+local user_symbol="$"
+if [[ $(print -P "%#") =~ "#" ]]; then
+    user_symbol = "#"
+fi
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%B%F{black}%K{yellow}%} $user_symbol%{%b%f%k%F{yellow}%} %{%f%}"
+
+# Custom config
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Ruby path
+if [ -d "/usr/local/opt/ruby/bin" ]; then
+  export PATH=/usr/local/opt/ruby/bin:$PATH
+  export PATH=`gem environment gemdir`/bin:$PATH
+fi
