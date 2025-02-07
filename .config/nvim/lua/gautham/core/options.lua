@@ -10,12 +10,17 @@ opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
 opt.shiftwidth = 2 -- 2 spaces for indent width
 opt.expandtab = true -- expand tab to spaces
 opt.autoindent = true -- copy indent from current line when starting new one
+opt.smartindent = true
 
-opt.wrap = false
+opt.wrap = true
 
 -- search settings
 opt.ignorecase = true -- ignore case when searching
 opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
+
+-- undo tree
+opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+opt.undofile = true
 
 -- turn on termguicolors for tokyonight colorscheme to work
 -- (have to use iterm2 or any other true color terminal)
@@ -28,3 +33,6 @@ opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or 
 
 -- clipboard
 opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+
+-- editor
+opt.scrolloff = 8
